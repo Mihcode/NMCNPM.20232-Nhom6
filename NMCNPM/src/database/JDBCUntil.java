@@ -12,9 +12,11 @@ public class JDBCUntil {
 
         try {
             // Load the SQL Server driver (not needed to register explicitly)
+		// Tai SQL Sever de ket noi
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             // Connection parameters
+		//DESKTOP-KT3KI6S:1433 ten may tinh local ket noi, trong SQL sever tao 1 database la NMCNPM
             String url = "jdbc:sqlserver://DESKTOP-KT3KI6S:1433;encrypt=true;databaseName=NMCNPM;trustServerCertificate = true";
             String userName = "sa";
             String password = "admin";

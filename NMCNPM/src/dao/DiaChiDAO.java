@@ -24,14 +24,17 @@ public class DiaChiDAO implements DAOInterface<DiaChi>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "INSERT INTO QLDiaChi(ID_diachi, so_phong, dien_tich) " +
-						"VALUES (" + t.getID_diachi()+ " , " + t.getSo_phong() + " , " + t.getDien_tich()+")";
+			String sql = "INSERT INTO tbl_diachi (so_phong, dien_tich) " +
+						"VALUES (" + "'" + t.getSo_phong() + "'" + " , " + t.getDien_tich()+")";
 		
-		int ketQua = st.executeUpdate(sql);
+		int thongbao = st.executeUpdate(sql);
 			
 			//4.
 		System.out.println("Ban da thuc hien cau lenh" + sql);
-		System.out.println("Co " + ketQua +" dong bi thay doi");
+		System.out.println("Co " + thongbao +" dong bi thay doi");
+		
+		
+		
 			//5.
 		JDBCUntil.closeConnection(con);
 		} catch (SQLException e) {
@@ -52,7 +55,7 @@ public class DiaChiDAO implements DAOInterface<DiaChi>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "UPDATE QLDiaChi" +
+			String sql = "UPDATE tbl_diachi" +
 						" SET" + 
 						"dien_tich = '" + t.getDien_tich()+"'"+
 						",so_phong= '" + t.getSo_phong() +"'" +
@@ -82,8 +85,8 @@ public class DiaChiDAO implements DAOInterface<DiaChi>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "DELETE FROM QLDiaChi" +
-						" WHERE ID_diachi ='" +t.getID_diachi() +"'" ;
+			String sql = "DELETE FROM tbl_diachi" +
+						" WHERE so_phong ='" +t.getSo_phong() +"'" ;
 		
 		int ketQua = st.executeUpdate(sql);
 			
@@ -110,7 +113,7 @@ public class DiaChiDAO implements DAOInterface<DiaChi>{
 	//2.Tao ra doi tuong statement
 	Statement st = con.createStatement();		
 	//3.run cau lenh SQL
-	String sql = "SELECT* FROM QLDiaChi WHERE ID_diachi = '" + t.getID_diachi() + "'";
+	String sql = "SELECT* FROM tbl_diachi WHERE so_phong = '" + t.getSo_phong() + "'";
 	System.out.println("Ban da thuc hien cau lenh " + sql);
 	ResultSet rs = st.executeQuery(sql);
 	
@@ -118,7 +121,7 @@ public class DiaChiDAO implements DAOInterface<DiaChi>{
 	//4.
 	while(rs.next()) {
 		int id = rs.getInt("ID_diachi");
-		char so_phong = (char)rs.getInt("so_phong");
+		String so_phong = rs.getString("so_phong");
 		int dien_tich = rs.getInt("dien_tich");
 		DiaChi dia_chi = new DiaChi(so_phong, dien_tich);
 		dia_chi.setID_diachi(id);
@@ -137,8 +140,13 @@ return ketQua;
 	}
 
 	@Override
-	public boolean checkExitsUserName(DiaChi t) {
+	public boolean checkExit(DiaChi t) {
 		// TODO Auto-generated method stub
+		DiaChi diaChi = DiaChiDAO.getInstance().selectByusername(t);
+		if (diaChi != null) {
+			
+			return true;
+		}
 		return false;
 	}
 	@Override
@@ -152,7 +160,7 @@ return ketQua;
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "SELECT* FROM QLDiaChi" ;
+			String sql = "SELECT* FROM tbl_diachi" ;
 		
 			ResultSet rs = st.executeQuery(sql);
 			
@@ -161,7 +169,7 @@ return ketQua;
 		System.out.println("Co " + ketQua +" dong bi thay doi");
 		while(rs.next()) {
 			int id = rs.getInt("ID_diachi");
-			char so_phong = (char)rs.getInt("so_phong");
+			String so_phong = rs.getString("so_phong");
 			int dien_tich = rs.getInt("dien_tich");
 			DiaChi dia_chi = new DiaChi(so_phong, dien_tich);
 			dia_chi.setID_diachi(id);
@@ -187,14 +195,14 @@ return ketQua;
 					//2.Tao ra doi tuong statement
 					Statement st = con.createStatement();		
 					//3.run cau lenh SQL
-					String sql = "SELECT* FROM QLDiaChi WHERE " + condition ;
+					String sql = "SELECT* FROM tbl_diachi WHERE " + condition ;
 					System.out.println("Ban da thuc hien cau lenh " + sql);
 					ResultSet rs = st.executeQuery(sql);
 					
 					//4.
 					while(rs.next()) {
 						int id = rs.getInt("ID_diachi");
-						char so_phong = (char)rs.getInt("so_phong");
+						String so_phong = rs.getString("so_phong");
 						int dien_tich = rs.getInt("dien_tich");
 						DiaChi dia_chi = new DiaChi(so_phong, dien_tich);
 						dia_chi.setID_diachi(id);

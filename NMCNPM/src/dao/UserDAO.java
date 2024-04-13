@@ -22,7 +22,7 @@ public class UserDAO implements DAOInterface<User>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "INSERT INTO QLUser (username, password) " +
+			String sql = "INSERT INTO tbl_user (user_name, password) " +
 						"VALUES ('" + t.getUsername()+ "' , '" + t.getPassword() + "')";
 		
 		int ketQua = st.executeUpdate(sql);
@@ -50,11 +50,11 @@ public class UserDAO implements DAOInterface<User>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "UPDATE QLUser" +
+			String sql = "UPDATE tbl_user" +
 						" SET" + 
-						" username = '" + t.getUsername()+"'"+
+						" user_name = '" + t.getUsername()+"'"+
 						",password = '" + t.getPassword() +"'" +
-						"WHERE userid = 2"  ;
+						"WHERE user_id = " +t.getUserid()  ;
 		
 		int ketQua = st.executeUpdate(sql);
 			
@@ -80,8 +80,8 @@ public class UserDAO implements DAOInterface<User>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "DELETE FROM QLUser" +
-						" WHERE username ='" +t.getUsername() +"'" ;
+			String sql = "DELETE FROM tbl_user" +
+						" WHERE user_name ='" +t.getUsername() +"'" ;
 		
 		int ketQua = st.executeUpdate(sql);
 			
@@ -108,7 +108,7 @@ public class UserDAO implements DAOInterface<User>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "SELECT* FROM QLUser" ;
+			String sql = "SELECT* FROM tbl_user" ;
 		
 			ResultSet rs = st.executeQuery(sql);
 			
@@ -117,9 +117,9 @@ public class UserDAO implements DAOInterface<User>{
 		System.out.println("Co " + ketQua +" dong bi thay doi");
 		while(rs.next()) {
 			int id = rs.getInt("userid");
-			String userName = rs.getString("username");
+			String username = rs.getString("username");
 			String password = rs.getString("password");
-			User user = new User (userName, password);
+			User user = new User (username, password);
 			user.setUserid(id);
 			ketQua.add(user);
 			
@@ -144,17 +144,17 @@ public class UserDAO implements DAOInterface<User>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "SELECT* FROM QLUser WHERE username = '" + t.getUsername() + "'";
+			String sql = "SELECT* FROM tbl_user WHERE user_name = '" + t.getUsername() + "'";
 			System.out.println("Ban da thuc hien cau lenh " + sql);
 			ResultSet rs = st.executeQuery(sql);
 			
 			
 			//4.
 			while(rs.next()) {
-				int id = rs.getInt("userid");
-				String userName = rs.getString("username");
+				int id = rs.getInt("user_id");
+				String username = rs.getString("user_name");
 				String password = rs.getString("password");
-				User user = new User (userName, password);
+				User user = new User (username, password);
 				user.setUserid(id);
 				ketQua = user;
 			}
@@ -181,16 +181,16 @@ public class UserDAO implements DAOInterface<User>{
 			//2.Tao ra doi tuong statement
 			Statement st = con.createStatement();		
 			//3.run cau lenh SQL
-			String sql = "SELECT* FROM QLUser WHERE " + condition ;
+			String sql = "SELECT* FROM tbl_user WHERE " + condition ;
 			System.out.println("Ban da thuc hien cau lenh " + sql);
 			ResultSet rs = st.executeQuery(sql);
 			
 			//4.
 			while(rs.next()) {
-				int id = rs.getInt("userid");
-				String userName = rs.getString("username");
+				int id = rs.getInt("user_id");
+				String username = rs.getString("user_name");
 				String password = rs.getString("password");
-				User user = new User (userName, password);
+				User user = new User (username, password);
 				user.setUserid(id);
 				ketQua.add(user);
 				
@@ -206,7 +206,7 @@ public class UserDAO implements DAOInterface<User>{
 		return ketQua;
 	}
 	@Override
-	public boolean checkExitsUserName(User t) {
+	public boolean checkExit(User t) {
 		// TODO Auto-generated method stub
 		User Exits = UserDAO.getInstance().selectByusername(t);
 		if (Exits != null) {

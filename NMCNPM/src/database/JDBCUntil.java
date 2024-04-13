@@ -15,7 +15,7 @@ public class JDBCUntil {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
             // Connection parameters
-            String url = "jdbc:sqlserver://DESKTOP-KT3KI6S:1433;encrypt=true;databaseName=NMCNPM;trustServerCertificate = true";
+            String url = "jdbc:sqlserver://DESKTOP-KT3KI6S:1433;encrypt=true;databaseName=Quanlychungcu;trustServerCertificate = true";
             String userName = "sa";
             String password = "admin";
 

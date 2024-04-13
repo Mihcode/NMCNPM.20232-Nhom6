@@ -7,9 +7,9 @@ import model.User;
 
 public class testUserDAO {
 	public static void main(String[] args) {
-		User user = new User("adada", "admin");
-//		UserDAO.getInstance().insert(user);
-		UserDAO.getInstance().checkExitsUserName(user);
+		User user = new User("admin", "Thanhtu");
+		UserDAO.getInstance().insert(user);
+//		UserDAO.getInstance().checkExitsUserName(user);
 
 //		User user2 = new User("admin", "Thanhtu");
 //		UserDAO.getInstance().update(user2);

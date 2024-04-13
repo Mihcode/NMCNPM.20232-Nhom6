@@ -1,12 +1,16 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.IllegalFormatWidthException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,15 +25,15 @@ import dao.DiaChiDAO;
 import model.DiaChi;
 import static view.MainWindow.*;
 public class DiaChiView {
-	private MainController mainController;
+	private DiaChiController diaChiController;
 	private MainWindow mainWindow;
-    private ArrayList<DiaChi> list;
-    DefaultTableModel table;
+    public ArrayList<DiaChi> list;
+    public DefaultTableModel table;
     JButton ThemDiaChi, XoaDiaChi, TimDiaChi;
     JTable jtable = new JTable();
-    JPanel buttonPanel;
-    int id = -1, dientich = -1;
-	char sophong = 'k';
+    JLabel buttonLabel;
+    int id, dientich;
+    char sophong;
     DefaultTableModel tableModel = new DefaultTableModel() {
 
         @Override
@@ -38,99 +42,42 @@ public class DiaChiView {
         }
     };
 
-    private int i = 1;
 
-    public DiaChiView(MainController mainController) {
-        this.mainController = mainController;
-        list = new DiaChiDAO().getInstance().selectALL();
+    public DiaChiView(DiaChiController diaChiController) {
+    	this.diaChiController = diaChiController;
+    	this.mainWindow = diaChiController.getMainController().getMainWindown();
+        list = DiaChiDAO.getInstance().selectALL();
         jtable.setModel(tableModel);
         table = (DefaultTableModel) jtable.getModel();
         table.setColumnIdentifiers(new Object[] {
-            "STT","ID Địa chỉ", "Số phòng", "Diện tích"
+            "ID Địa chỉ", "Số phòng", "Diện tích"
         });
-        showTable();
+        showTable(list);
         
-        JLabel mainLabel = mainController.getMainWindown().getMainLabel();
+        JLabel mainLabel = mainWindow.getMainLabel();
+        mainLabel.removeAll();
+		mainLabel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(login.class.getResource("back.jpg")).getScaledInstance(WIDTH, HEIGHT, 0)));
+		mainLabel.setLayout(null);
+		JLabel QLDiaChiLabel = new JLabel("Quản lý địa chỉ");
+		Font font = new Font("Arial",Font.BOLD, 30);
+		
+		QLDiaChiLabel.setBounds(100, 30, 400, 50);
+		QLDiaChiLabel.setFont(font);
+		QLDiaChiLabel.setForeground(Color.GREEN);
+		JButton back = diaChiController.getMainController().getMainWindown().getBack();
+		back.setBounds(400,550,100,30);
+		
+		
+		mainLabel.add(QLDiaChiLabel);
         JScrollPane jScrollPane = new JScrollPane(jtable);
         mainLabel.setLayout(new BorderLayout());
         mainLabel.add(jScrollPane, BorderLayout.EAST); 
         
         
-        buttonPanel = new JPanel(); 
-        buttonPanel.setPreferredSize(new Dimension(720, 50));
-        buttonPanel.setLayout(null);
+        buttonLabel = new JLabel(); 
+        buttonLabel.setPreferredSize(new Dimension(720, 50));
+        buttonLabel.setLayout(null);
         ThemDiaChi = new JButton("Them dia chi");
-        ThemDiaChi.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				JLabel mainLabel = mainController.getMainWindown().getMainLabel();
-				
-				
-				
-				if (e.getSource() == ThemDiaChi) {
-					JTable sideTable = new JTable();
-					sideTable.setModel(tableModel);
-					JTextField IDDiaChi = new JTextField();
-					JTextField soPhong = new JTextField();
-					JTextField dienTich = new JTextField();
-					JLabel labelID = new JLabel("Id");
-					JLabel labelsoPhong = new JLabel("So Phong");
-					JLabel labeldienTich = new JLabel("Dien tich");
-					JPanel sidePanel = new JPanel();
-					IDDiaChi.setBounds(80, 120, 200, 30);
-					soPhong.setBounds(80, 180, 200, 30);
-					dienTich.setBounds(80, 240, 200, 30);
-					labelID.setBounds(0, 120, 80, 30);
-					labelsoPhong.setBounds(0, 180, 80, 30);
-					labeldienTich.setBounds(0, 240, 80, 30);
-					sidePanel.setBounds(0, 100, 400, 400);
-					sidePanel.add(IDDiaChi);
-					sidePanel.add(soPhong);
-					sidePanel.add(dienTich);
-					sidePanel.add(labeldienTich);
-					sidePanel.add(labelID);
-					sidePanel.add(labelsoPhong);
-					sidePanel.setLayout(null);
-					JButton them = new JButton("Them");
-					them.setBounds(100, 550, 200, 30);
-					buttonPanel.add(them);
-					buttonPanel.add(sidePanel);
-					buttonPanel.remove(XoaDiaChi);
-					buttonPanel.remove(TimDiaChi);
-					buttonPanel.remove(ThemDiaChi);
-					
-					them.addActionListener(new ActionListener() {
-						
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							String idText = IDDiaChi.getText();
-							String sophongText = soPhong.getText();
-							String dientichText = dienTich.getText();
-							System.out.println("idteee" + idText +sophongText + dientichText);
-							mainLabel.repaint();
-							id = Integer.parseInt(idText);
-							sophong = sophongText.charAt(0);
-							dientich = Integer.parseInt(dientichText);
-							// TODO Auto-generated method stub
-							if(e.getSource() == them) {
-								
-								System.out.println(id + sophong + dientich);
-								DiaChi diachi = new DiaChi(id, sophong, dientich);
-								DiaChiDAO.getInstance().insert(diachi);
-								System.out.println("them thanh cong");
-								list.add(DiaChiDAO.getInstance().selectByusername(diachi));
-								table.setRowCount(0);
-								i = 1;
-								showTable();
-							}
-						}
-					});
-					mainLabel.repaint();
-				}
-			}
-		});
         ThemDiaChi.setBounds(100, 100, 200, 50);
         
         
@@ -140,28 +87,31 @@ public class DiaChiView {
         TimDiaChi = new JButton("Tim dia chi");
         TimDiaChi.setBounds(100, 200, 200, 50);
         
-        buttonPanel.add(ThemDiaChi);
-        buttonPanel.add(TimDiaChi);
-        buttonPanel.add(XoaDiaChi);
-        mainLabel.add(buttonPanel, BorderLayout.WEST);
+        
+        ActionListener ac = new DiaChiController(this);
+        ThemDiaChi.addActionListener(ac);
+        XoaDiaChi.addActionListener(ac);
+        TimDiaChi.addActionListener(ac);
+        back.addActionListener(ac);
+        
+        buttonLabel.add(ThemDiaChi);
+        buttonLabel.add(TimDiaChi);
+        buttonLabel.add(XoaDiaChi);
+        buttonLabel.add(back);
+        mainLabel.add(buttonLabel);
         mainLabel.revalidate(); 
         mainLabel.repaint(); 
     }
 
-    private void showTable() {
+    public void showTable(ArrayList<DiaChi> list) {
         // TODO Auto-generated method stub
         for (DiaChi d : list) {
             table.addRow(new Object[] {
-                i++,d.getID_diachi(), d.getSo_phong(), d.getDien_tich()
+                d.getID_diachi(), d.getSo_phong(), d.getDien_tich()
             });
         }
     }
-    private void updateTable() {
-    	for (int j = 0; j < 4; j++) {
-    		table.removeRow(j);
-    	}
-    	showTable();
-    }
+
 
 	public JButton getThemDiaChi() {
 		return ThemDiaChi;
@@ -187,12 +137,38 @@ public class DiaChiView {
 		TimDiaChi = timDiaChi;
 	}
 
-	public JPanel getButtonPanel() {
-		return buttonPanel;
+	
+
+	public JLabel getButtonLabel() {
+		return buttonLabel;
 	}
 
-	public void setButtonPanel(JPanel buttonPanel) {
-		this.buttonPanel = buttonPanel;
+	public void setButtonLabel(JLabel buttonLabel) {
+		this.buttonLabel = buttonLabel;
+	}
+
+	public DiaChiController getDiaChiController() {
+		return diaChiController;
+	}
+
+	public void setDiaChiController(DiaChiController diaChiController) {
+		this.diaChiController = diaChiController;
+	}
+
+	public ArrayList<DiaChi> getList() {
+		return list;
+	}
+
+	public void setList(ArrayList<DiaChi> list) {
+		this.list = list;
+	}
+
+	public MainWindow getMainWindow() {
+		return mainWindow;
+	}
+
+	public void setMainWindow(MainWindow mainWindow) {
+		this.mainWindow = mainWindow;
 	}
     
 }

@@ -11,6 +11,6 @@ public interface DAOInterface<T> {
 	public ArrayList<T> selectALL();
 	public T selectByusername(T t);
 	public ArrayList<T> selectByCondition(String condition);
-	public boolean checkExitsUserName(T t);
+	public boolean checkExit(T t);
 	
 }

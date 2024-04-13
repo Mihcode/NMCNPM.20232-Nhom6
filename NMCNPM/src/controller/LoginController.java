@@ -26,7 +26,7 @@ public class LoginController implements ActionListener {
 		String password = login.getTextField2().getText();
 		User user = new User(userName, password);
 		System.out.println(userName + " " + password);
-		boolean check = UserDAO.getInstance().checkExitsUserName(user);
+		boolean check = UserDAO.getInstance().checkExit(user);
 		if(e.getSource() == login.getLogin()) {
 			if(userName.isBlank() || password.isBlank()) {
 				JOptionPane.showMessageDialog(login.getFrame().getRootPane(), "Khong duoc de trong", "Warning", JOptionPane.ERROR_MESSAGE);
@@ -38,7 +38,7 @@ public class LoginController implements ActionListener {
 						LoginAccess = true;
 						if (LoginAccess == true) {
 							login.getFrame().setVisible(false);
-							MainWindow mainWindow = new MainWindow();
+							new MainWindow();
 						}
 					}else {
 						JOptionPane.showMessageDialog(login.getFrame().getRootPane(), "Sai mat khau");

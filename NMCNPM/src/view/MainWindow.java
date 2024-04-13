@@ -16,7 +16,7 @@ public class MainWindow {
 	JFrame frame = new JFrame("Main");
 	JPanel mainPanel = new JPanel();
 	JLabel mainLabel = new JLabel();
-	JButton QLDiaChi, QLNhanKhau, QLHoKhau, QLQuanHe, QLKhoanThu, QLNopTien;
+	JButton QLDiaChi, QLNhanKhau, QLHoKhau, QLQuanHe, QLKhoanThu, QLNopTien, back;
 	final static int WIDTH = 1080;
 	final static int HEIGHT = 720;
 	public MainWindow() {
@@ -31,8 +31,8 @@ public class MainWindow {
 		mainPanel.setSize(WIDTH, HEIGHT);
 		mainLabel.setSize(WIDTH, HEIGHT);
 		mainLabel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(login.class.getResource("back.jpg")).getScaledInstance(WIDTH, HEIGHT, 0)));
-		frame.add(mainPanel);
-		mainPanel.add(mainLabel);
+		
+		
 		QLDiaChi = new JButton("Quản lý địa chỉ");
 		QLDiaChi.setBounds(30, 50, 200, 50);
 		QLNhanKhau = new JButton("Quản lý nhân khẩu");
@@ -45,6 +45,7 @@ public class MainWindow {
 		QLKhoanThu.setBounds(30, 250, 200, 50);
 		QLNopTien = new JButton("Quản lý nộp tiền");
 		QLNopTien.setBounds(30,300,200,50);
+		back = new JButton("Back");
 		
 		ActionListener ac = new MainController(this);
 		QLDiaChi.addActionListener(ac);
@@ -64,6 +65,10 @@ public class MainWindow {
 		mainLabel.add(QLNhanKhau);
 		mainLabel.add(QLNopTien);
 		mainLabel.add(QLQuanHe);
+		mainLabel.add(back);
+		
+		mainPanel.add(mainLabel);
+		frame.add(mainPanel);
 		
 	}
 	public JButton getQLDiaChi() {
@@ -119,6 +124,12 @@ public class MainWindow {
 	}
 	public void setMainLabel(JLabel mainLabel) {
 		this.mainLabel = mainLabel;
+	}
+	public JButton getBack() {
+		return back;
+	}
+	public void setBack(JButton back) {
+		this.back = back;
 	}
 	
 }

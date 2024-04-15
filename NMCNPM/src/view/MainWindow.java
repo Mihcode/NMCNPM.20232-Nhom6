@@ -16,23 +16,39 @@ public class MainWindow {
 	JFrame frame = new JFrame("Main");
 	JPanel mainPanel = new JPanel();
 	JLabel mainLabel = new JLabel();
-	JButton QLDiaChi, QLNhanKhau, QLHoKhau, QLQuanHe, QLKhoanThu, QLNopTien, back;
+	JButton QLDiaChi, QLNhanKhau, QLHoKhau, QLQuanHe, QLKhoanThu, QLNopTien, back, HomeButton;
 	final static int WIDTH = 1080;
 	final static int HEIGHT = 720;
 	public MainWindow() {
 		// TODO Auto-generated constructor stub
-		frame.setSize(WIDTH, HEIGHT);
-		frame.setVisible(true);
-		frame.setLayout(null);
-		frame.setLocationRelativeTo(null);
 		
+		
+		setJButton();
+		setmainLabel();
+		setmainFrame();
+		
+		
+		
+		
+	}
+	
+	public void setmainLabel() {
 		mainPanel.setVisible(true);
 		mainLabel.setVisible(true);
 		mainPanel.setSize(WIDTH, HEIGHT);
 		mainLabel.setSize(WIDTH, HEIGHT);
 		mainLabel.setIcon(new ImageIcon(Toolkit.getDefaultToolkit().createImage(login.class.getResource("back.jpg")).getScaledInstance(WIDTH, HEIGHT, 0)));
-		
-		
+		mainLabel.add(QLDiaChi);
+		mainLabel.add(QLHoKhau);
+		mainLabel.add(QLKhoanThu);
+		mainLabel.add(QLNhanKhau);
+		mainLabel.add(QLNopTien);
+		mainLabel.add(QLQuanHe);
+		mainLabel.add(back);
+		mainLabel.add(HomeButton);
+	}
+	
+	public void setJButton() {
 		QLDiaChi = new JButton("Quản lý địa chỉ");
 		QLDiaChi.setBounds(30, 50, 200, 50);
 		QLNhanKhau = new JButton("Quản lý nhân khẩu");
@@ -46,6 +62,8 @@ public class MainWindow {
 		QLNopTien = new JButton("Quản lý nộp tiền");
 		QLNopTien.setBounds(30,300,200,50);
 		back = new JButton("Back");
+		HomeButton = new JButton("Back to Home");
+		HomeButton.setBounds(0, 0, 100, 30);
 		
 		ActionListener ac = new MainController(this);
 		QLDiaChi.addActionListener(ac);
@@ -54,22 +72,15 @@ public class MainWindow {
 		QLQuanHe.addActionListener(ac);
 		QLKhoanThu.addActionListener(ac);
 		QLNopTien.addActionListener(ac);
-		
-		
-		
-		
-		
-		mainLabel.add(QLDiaChi);
-		mainLabel.add(QLHoKhau);
-		mainLabel.add(QLKhoanThu);
-		mainLabel.add(QLNhanKhau);
-		mainLabel.add(QLNopTien);
-		mainLabel.add(QLQuanHe);
-		mainLabel.add(back);
-		
+	}
+	public void setmainFrame() {
+		frame.setSize(WIDTH, HEIGHT);
+		frame.setVisible(true);
+		frame.setLayout(null);
+		frame.setLocationRelativeTo(null);
 		mainPanel.add(mainLabel);
 		frame.add(mainPanel);
-		
+		frame.repaint();
 	}
 	public JButton getQLDiaChi() {
 		return QLDiaChi;

@@ -21,11 +21,13 @@ public class MainController implements ActionListener {
 		if (e.getSource() == mainWindown.getQLDiaChi()) {
 			System.out.println("Dang vao " + src);
 			new DiaChiController(this);
+			backToMainWindow(mainWindown.getBack());
 		} else if (e.getSource() == mainWindown.getQLHoKhau()) {
 			System.out.println("Dang vao " + src);
 
 		}else if (e.getSource() == mainWindown.getQLKhoanThu()) {
 			System.out.println("Dang vao " + src);
+			new KhoanThuController(this);
 
 		}else if (e.getSource() == mainWindown.getQLNhanKhau()) {
 			System.out.println("Dang vao " + src);
@@ -35,7 +37,7 @@ public class MainController implements ActionListener {
 
 		}else if (e.getSource() == mainWindown.getQLQuanHe()) {
 			System.out.println("Dang vao " + src);
-
+			
 		}
 	}
 	public MainWindow getMainWindown() {
@@ -44,5 +46,6 @@ public class MainController implements ActionListener {
 	public void setMainWindown(MainWindow mainWindown) {
 		this.mainWindown = mainWindown;
 	}
-	
+	public void backToMainWindow(JButton homeButton) {
+	}
 }

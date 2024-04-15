@@ -25,7 +25,6 @@ public class DiaChiController implements ActionListener{
 	private MainController mainController;
 	boolean checkClick = false;
 	 DefaultTableModel tableModel = new DefaultTableModel() {
-
 	        @Override
 	        public boolean isCellEditable(int row, int column) {
 	           //all cells false
@@ -60,13 +59,30 @@ public class DiaChiController implements ActionListener{
 		JTextField dienTich = new JTextField();
 		JLabel labelsoPhong = new JLabel("So Phong");
 		JLabel labeldienTich = new JLabel("Dien tich");
-		JTable sideTable = new JTable();
 		
 		soPhong.setBounds(80, 180, 200, 30);
 		dienTich.setBounds(80, 240, 200, 30);
 		labelsoPhong.setBounds(0, 180, 80, 30);
 		labeldienTich.setBounds(0, 240, 80, 30);
+		back.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				if (e.getSource() == back) {
+					buttonLabel.removeAll();
+					mainLabel.remove(buttonLabel);
+					buttonLabel.add(TimDiaChi);
+					buttonLabel.add(XoaDiaChi);
+					buttonLabel.add(ThemDiaChi);
+					buttonLabel.add(back);
+					mainLabel.add(buttonLabel);
+					mainLabel.repaint();
+				}
+			}
+		});
 		if (e.getSource() == ThemDiaChi) {
+			buttonLabel.removeAll();
+			mainLabel.remove(buttonLabel);
 			buttonLabel.add(soPhong);
 			buttonLabel.add(dienTich);
 			buttonLabel.add(labeldienTich);
@@ -75,15 +91,10 @@ public class DiaChiController implements ActionListener{
 			JButton them = new JButton("Them");
 			them.setBounds(100, 550, 200, 30);
 			buttonLabel.add(them);
-			buttonLabel.remove(XoaDiaChi);
-			buttonLabel.remove(TimDiaChi);
-			buttonLabel.remove(ThemDiaChi);
-			mainLabel.add(buttonLabel);
-			
+			buttonLabel.add(back);
 			
 			
 			them.addActionListener(new ActionListener() {
-				
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
@@ -92,19 +103,6 @@ public class DiaChiController implements ActionListener{
 					String sophong = sophongText;
 					int dientich = Integer.parseInt(dientichText);
 					// TODO Auto-generated method stub
-					if (e.getSource() == back) {
-						System.out.println("back ve diachi");
-						mainLabel.remove(labeldienTich);
-						mainLabel.remove(labelsoPhong);
-						mainLabel.remove(dienTich);
-						mainLabel.remove(soPhong);
-						mainLabel.add(TimDiaChi);
-						mainLabel.add(XoaDiaChi);
-						mainLabel.add(ThemDiaChi);
-						mainLabel.repaint();
-						
-						
-					}
 					if(e.getSource() == them) {
 						DiaChi diachi = new DiaChi(sophong, dientich);
 						if (DiaChiDAO.getInstance().checkExit(diachi) == true) {
@@ -115,42 +113,28 @@ public class DiaChiController implements ActionListener{
 							diaChiView.list = DiaChiDAO.getInstance().selectALL();
 							diaChiView.table.setRowCount(0);
 							diaChiView.showTable(diaChiView.getList());
+							soPhong.setText("");
+							dienTich.setText("");
 						}
+						mainLabel.repaint();
 					}
 				}
 			});
-			back.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					if (e.getSource() == back) {
-						System.out.println("back ve diachi");
-						mainLabel.remove(buttonLabel);
-						mainLabel.add(TimDiaChi);
-						mainLabel.add(XoaDiaChi);
-						mainLabel.add(ThemDiaChi);
+
+		}
 						
-						
-					}
-				}
-			});
-			mainLabel.repaint();
-						
-				
 		if (e.getSource() == XoaDiaChi) {
+			buttonLabel.removeAll();
 			buttonLabel.add(soPhong);
 			buttonLabel.add(labelsoPhong);
 			buttonLabel.setLayout(null);
 			JButton xoa = new JButton("Xoa");
 			xoa.setBounds(100, 550, 200, 30);
 			buttonLabel.add(xoa);
-			buttonLabel.add(buttonLabel);
-			buttonLabel.remove(XoaDiaChi);
-			buttonLabel.remove(TimDiaChi);
-			buttonLabel.remove(ThemDiaChi);
-						
+			buttonLabel.add(back);
+			
 			xoa.addActionListener(new ActionListener() {
-							
+					
 					@Override
 					public void actionPerformed(ActionEvent e) {
 						String sophongText = soPhong.getText();
@@ -168,42 +152,25 @@ public class DiaChiController implements ActionListener{
 								JOptionPane.showMessageDialog(rootPane, "Khong co phong " + diachi.getSo_phong());
 								
 							}
+							mainLabel.repaint();
 						}
 							}
-						});
-			back.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					if (e.getSource() == back) {
-						System.out.println("back ve diachi");
-						mainLabel.remove(buttonLabel);
-						mainLabel.add(TimDiaChi);
-						mainLabel.add(XoaDiaChi);
-						mainLabel.add(ThemDiaChi);
-						
-						
-					}
-				}
-			});
-			mainLabel.repaint();
-						
+						});		
 					}
 		if (e.getSource() == TimDiaChi) {
+			buttonLabel.removeAll();
 			buttonLabel.add(soPhong);
 			buttonLabel.add(labelsoPhong);
 			buttonLabel.setLayout(null);
 			JButton tim = new JButton("Tim");
 			tim.setBounds(100, 550, 200, 30);
 			buttonLabel.add(tim);
-			buttonLabel.add(buttonLabel);
-			buttonLabel.remove(XoaDiaChi);
-			buttonLabel.remove(TimDiaChi);
-			buttonLabel.remove(ThemDiaChi);						
+			buttonLabel.add(back);
 			tim.addActionListener(new ActionListener() {
 							
 					@Override
 					public void actionPerformed(ActionEvent e) {
+						
 						String sophongText = soPhong.getText();
 						String sophong = sophongText;
 						// TODO Auto-generated method stub
@@ -219,22 +186,14 @@ public class DiaChiController implements ActionListener{
 								JOptionPane.showMessageDialog(rootPane, "Khong tim thay phong " + diachi.getSo_phong());
 								
 							}
+							mainLabel.repaint();
 						}
-						if (e.getSource() == back) {
-							System.out.println("back ve diachi");
-							mainLabel.remove(buttonLabel);
-							mainLabel.add(TimDiaChi);
-							mainLabel.add(XoaDiaChi);
-							mainLabel.add(ThemDiaChi);
-							
-							
-						}
-							}
-						});
-			
-			mainLabel.repaint();
-					}			
-	}
+						
+					}
+			});
+					}
+		mainLabel.add(buttonLabel);
+		mainLabel.repaint();
 	}
 	public MainController getMainController() {
 		return mainController;

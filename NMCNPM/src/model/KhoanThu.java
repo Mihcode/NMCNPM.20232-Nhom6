@@ -4,8 +4,14 @@ public class KhoanThu {
 	private int ID_khoanthu;
 	private String ten_khoan_thu;
 	private double so_tien;
-	private boolean loai_khoan_thu;
-	private String date;
+	private	int loai_khoan_thu;
+	private String date; //YYYY-MM-DD
+	public KhoanThu(String t, double so_tien, int loai_khoan_thu, String date){
+		this.ten_khoan_thu = t;
+		this.so_tien = so_tien;
+		this.loai_khoan_thu = loai_khoan_thu;
+		this.date = date;
+	}
 	public int getID_khoanthu() {
 		return ID_khoanthu;
 	}
@@ -24,10 +30,11 @@ public class KhoanThu {
 	public void setSo_tien(double so_tien) {
 		this.so_tien = so_tien;
 	}
-	public boolean isLoai_khoan_thu() {
+	
+	public int getLoai_khoan_thu() {
 		return loai_khoan_thu;
 	}
-	public void setLoai_khoan_thu(boolean loai_khoan_thu) {
+	public void setLoai_khoan_thu(int loai_khoan_thu) {
 		this.loai_khoan_thu = loai_khoan_thu;
 	}
 	public String getDate() {
@@ -36,5 +43,4 @@ public class KhoanThu {
 	public void setDate(String date) {
 		this.date = date;
 	}
-	
 }

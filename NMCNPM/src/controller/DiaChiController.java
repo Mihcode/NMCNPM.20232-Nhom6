@@ -24,13 +24,7 @@ public class DiaChiController implements ActionListener{
 	private DiaChiView diaChiView;
 	private MainController mainController;
 	boolean checkClick = false;
-	 DefaultTableModel tableModel = new DefaultTableModel() {
-	        @Override
-	        public boolean isCellEditable(int row, int column) {
-	           //all cells false
-	           return false;
-	        }
-	    };
+	
 	public DiaChiController(MainController mainController) {
 		// TODO Auto-generated constructor stub
 		

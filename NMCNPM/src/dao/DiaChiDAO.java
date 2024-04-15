@@ -144,7 +144,6 @@ return ketQua;
 		// TODO Auto-generated method stub
 		DiaChi diaChi = DiaChiDAO.getInstance().selectByusername(t);
 		if (diaChi != null) {
-			
 			return true;
 		}
 		return false;

@@ -57,8 +57,8 @@ public class DiaChiDAO implements DAOInterface<DiaChi>{
 			//3.run cau lenh SQL
 			String sql = "UPDATE tbl_diachi" +
 						" SET" + 
-						"dien_tich = '" + t.getDien_tich()+"'"+
-						",so_phong= '" + t.getSo_phong() +"'" +
+						" dien_tich = '" + t.getDien_tich()+"'"+
+						",so_phong= " + t.getSo_phong()  +
 						"WHERE ID_diachi = " + t.getID_diachi()  ;
 		
 		int ketQua = st.executeUpdate(sql);

@@ -44,6 +44,7 @@ public class DiaChiController implements ActionListener{
 		JButton ThemDiaChi = diaChiView.getThemDiaChi();
 		JButton XoaDiaChi = diaChiView.getXoaDiaChi();
 		JButton TimDiaChi = diaChiView.getTimDiaChi();
+		JButton CapnhatDiaChi = diaChiView.getCapnhatDiaChi();
 		
 		JButton back = mainWindow.getBack();
 		JLabel buttonLabel = diaChiView.getButtonLabel();
@@ -68,6 +69,7 @@ public class DiaChiController implements ActionListener{
 					buttonLabel.add(TimDiaChi);
 					buttonLabel.add(XoaDiaChi);
 					buttonLabel.add(ThemDiaChi);
+					buttonLabel.add(CapnhatDiaChi);
 					buttonLabel.add(back);
 					mainLabel.add(buttonLabel);
 					mainLabel.repaint();
@@ -151,7 +153,75 @@ public class DiaChiController implements ActionListener{
 							}
 						});		
 					}
-		if (e.getSource() == TimDiaChi) {
+		if (e.getSource() == CapnhatDiaChi) {
+			
+			JTextField	dienTich1 = new JTextField();
+			dienTich1.setBounds(90, 380, 200, 30);;
+			JLabel labelsoPhong1 = new JLabel("So Phong");
+			JLabel labeldienTich1 = new JLabel("Dien tich");
+			labelsoPhong1.setBounds(0, 320, 80, 30);
+			labeldienTich1.setBounds(0, 380, 200, 30);
+			buttonLabel.setLayout(null);
+			JButton capNhat = new JButton("Cập nhật");
+			capNhat.setBounds(100, 550, 200, 30);
+			buttonLabel.removeAll();
+			buttonLabel.add(soPhong);
+			buttonLabel.add(labeldienTich);
+			buttonLabel.add(labelsoPhong);
+			buttonLabel.add(dienTich1);
+			buttonLabel.add(labeldienTich1);
+			buttonLabel.add(labelsoPhong1);
+			buttonLabel.add(capNhat);
+			buttonLabel.add(back);
+			capNhat.addActionListener(new ActionListener() {
+							
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						String sophongText = soPhong.getText();
+						String sophong = sophongText;
+						
+						String dienTich1Text = dienTich1.getText();
+						
+						String soPhongUpdated = sophongText;
+						int dienTichUpdated = Integer.parseInt(dienTich1Text);
+						JLabel dientichX;
+						DiaChi diachi = new DiaChi(sophong, -1);
+						if (DiaChiDAO.getInstance().checkExit(diachi) == true) {
+							diachi = DiaChiDAO.getInstance().selectByusername(diachi);
+							dientichX = new JLabel(String.valueOf(diachi.getDien_tich()));
+							dientichX.setBounds(80, 240, 200, 30);
+							JLabel k = new JLabel("Change to");
+							k.setForeground(Color.white);
+							k.setBounds(80, 280, 200, 30);
+							buttonLabel.add(k);
+							buttonLabel.add(dientichX);
+						}
+						// TODO Auto-generated method stub
+						if(e.getSource() == capNhat) {
+							diachi = new DiaChi(sophong, -1);
+							if (DiaChiDAO.getInstance().checkExit(diachi) == true) {
+								dientichX = new JLabel(String.valueOf(diachi.getDien_tich()));
+								JOptionPane.showMessageDialog(rootPane, "Da cap nhat dia chi " + diachi.getSo_phong());
+								ArrayList<DiaChi> temp = new ArrayList<DiaChi>();
+								DiaChi diaChiUpdate = DiaChiDAO.getInstance().selectByusername(diachi);
+								diaChiUpdate.setSo_phong(soPhongUpdated);
+								diaChiUpdate.setDien_tich(dienTichUpdated);
+								DiaChiDAO.getInstance().update(diaChiUpdate);
+								diaChiView.list = DiaChiDAO.getInstance().selectALL();
+								diaChiView.table.setRowCount(0);
+								diaChiView.showTable(diaChiView.getList());
+							}else {
+								JOptionPane.showMessageDialog(rootPane, "Khong tim thay phong vui long them phong de cap nhat " + diachi.getSo_phong());
+								
+							}
+							mainLabel.repaint();
+						}
+						
+					}
+			});
+					}
+		else if (e.getSource() == TimDiaChi) {
 			buttonLabel.removeAll();
 			buttonLabel.add(soPhong);
 			buttonLabel.add(labelsoPhong);

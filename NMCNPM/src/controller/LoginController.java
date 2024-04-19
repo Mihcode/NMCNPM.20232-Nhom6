@@ -2,6 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -11,8 +13,9 @@ import model.User;
 import view.LoginView;
 import view.MainWindow;
 
-public class LoginController implements ActionListener {
+public class LoginController implements ActionListener, KeyListener {
 	private LoginView login;
+	public boolean enterPressed = false;
 	private boolean LoginAccess = false;
 	public LoginController(LoginView login) {
 		this.login = login;
@@ -27,7 +30,7 @@ public class LoginController implements ActionListener {
 		User user = new User(userName, password);
 		System.out.println(userName + " " + password);
 		boolean check = UserDAO.getInstance().checkExit(user);
-		if(e.getSource() == login.getLogin()) {
+		if(e.getSource() == login.getLogin() || enterPressed == true) {
 			if(userName.isBlank() || password.isBlank()) {
 				JOptionPane.showMessageDialog(login.getFrame().getRootPane(), "Khong duoc de trong", "Warning", JOptionPane.ERROR_MESSAGE);
 			}
@@ -48,8 +51,7 @@ public class LoginController implements ActionListener {
 				}
 			}
 		}
-			System.out.println("username da co hay chua :" +check);
-			if(e.getSource() == login.getRegister()) {
+			else if(e.getSource() == login.getRegister()) {
 				if(userName.isBlank() || password.isBlank()) {
 					JOptionPane.showMessageDialog(login.getFrame().getRootPane(), "Khong duoc de trong", "Warning", JOptionPane.ERROR_MESSAGE);
 				}
@@ -72,6 +74,26 @@ public class LoginController implements ActionListener {
 	}
 	public void setLoginAccess(boolean loginAccess) {
 		LoginAccess = loginAccess;
+	}
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+		int code = e.getKeyCode();
+		if(code == KeyEvent.VK_ENTER) {
+			enterPressed = true;
+			System.out.println("Da an ENter");
+		}
+		}
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	}

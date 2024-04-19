@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 import java.net.URL;
 
 import javax.swing.*;
@@ -23,6 +24,8 @@ public class LoginView extends JFrame{
 	JMenuItem i1, i2, i3, i4;
 	JMenuBar menuBar;
 	JFrame frame = this;
+	ActionListener ac = new LoginController(this);
+	KeyListener key = new LoginController(this);
 	
 	public JFrame getFrame() {
 		return frame;
@@ -225,10 +228,11 @@ public class LoginView extends JFrame{
 		panel1.setLayout(null);
 		panel1.add(labelBack);
 		
-		ActionListener ac = new LoginController(this);
+		
 		Login.addActionListener(ac);
+		Login.addKeyListener(key);
 		Register.addActionListener(ac);
-	
+		panel2.setFocusable(true);
 		add(panel1);
 		add(panel2);
 		setLayout(null);
@@ -237,6 +241,7 @@ public class LoginView extends JFrame{
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setTitle("Login");
+		setFocusable(true);
 		//set Icon
 		URL urlIcon = login.class.getResource("phone-icon.png");
 		Image img = Toolkit.getDefaultToolkit().createImage(urlIcon);

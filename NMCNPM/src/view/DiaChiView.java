@@ -29,7 +29,7 @@ public class DiaChiView {
 	private MainWindow mainWindow;
     public ArrayList<DiaChi> list;
     public DefaultTableModel table;
-    JButton ThemDiaChi, XoaDiaChi, TimDiaChi;
+    JButton ThemDiaChi, XoaDiaChi, TimDiaChi, CapnhatDiaChi;
     JTable jtable = new JTable();
     JLabel buttonLabel;
     int id, dientich;
@@ -87,16 +87,21 @@ public class DiaChiView {
         TimDiaChi = new JButton("Tim dia chi");
         TimDiaChi.setBounds(100, 200, 200, 50);
         
+        CapnhatDiaChi = new JButton("Cập nhật địa chỉ");
+        CapnhatDiaChi.setBounds(100, 250, 200, 50);
+        
         
         ActionListener ac = new DiaChiController(this);
         ThemDiaChi.addActionListener(ac);
         XoaDiaChi.addActionListener(ac);
         TimDiaChi.addActionListener(ac);
+        CapnhatDiaChi.addActionListener(ac);
         back.addActionListener(ac);
         
         buttonLabel.add(ThemDiaChi);
         buttonLabel.add(TimDiaChi);
         buttonLabel.add(XoaDiaChi);
+        buttonLabel.add(CapnhatDiaChi);
         buttonLabel.add(back);
         mainLabel.add(buttonLabel);
         mainLabel.revalidate(); 
@@ -169,6 +174,14 @@ public class DiaChiView {
 
 	public void setMainWindow(MainWindow mainWindow) {
 		this.mainWindow = mainWindow;
+	}
+
+	public JButton getCapnhatDiaChi() {
+		return CapnhatDiaChi;
+	}
+
+	public void setCapnhatDiaChi(JButton capnhatDiaChi) {
+		CapnhatDiaChi = capnhatDiaChi;
 	}
     
 }
